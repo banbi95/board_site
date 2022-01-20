@@ -1,0 +1,97 @@
+
+{% extends 'board/base.html' %}
+{% load  humanize%}
+{% block title %}
+  {{ board.name }} - {{ block.super }}
+{% endblock %}
+
+{% block breadcrumb %}
+  <li class="breadcrumb-item"><a href="{% url 'board:home' %}">板块导航</a></li>
+  <li class="breadcrumb-item active">{{ board.name }}</li>
+{% endblock %}
+
+{% block content %}
+  <div class="mb-4">
+    <a href="{% url 'board:new_topic' board.pk %}" class="btn btn-primary">发布新帖</a>
+  </div>
+
+  <table class="table mb-4">
+    <thead class="thead-inverse">
+      <tr>
+        <th>主题</th>
+        <th>发帖者</th>
+        <th>回复数</th>
+        <th>查看数</th>
+        <th>最近更新时间</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for topic in topics %}
+       {% url 'board:topic_posts' board.pk topic.pk as topic_url %}
+        <tr>
+          <td>
+            <p><a href="{{ topic_url }}">{{ topic.subject }}</a></p>
+            <small class="text-muted">
+              Pages:
+              {% for i in topic.get_page_range %}
+                <a href="{{ topic_url }}?page={{ i }}">{{ i }}</a>
+              {% endfor %}
+              {% if topic.has_many_pages %}
+              ... <a href="{{ topic_url }}?page={{ topic.get_page_count }}">末页</a>
+              {% endif %}
+            </small>
+          </td>
+          <td>{{ topic.starter.username }}</td>
+          <td>{{ topic.replies}}</td>
+          <td>{{ topic.views }}</td>
+          <td>{{ topic.last_updated|naturaltime}}</td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+
+
+{% include 'board/includes/pagination.html' %}
+
+<!--  {% if topics.has_other_pages %}-->
+<!--    <nav aria-label="Topics pagination" class="mb-4">-->
+<!--      <ul class="pagination">-->
+<!--        {% if topics.has_previous %}-->
+<!--          <li class="page-item">-->
+<!--            <a class="page-link" href="?page={{ topics.previous_page_number }}">上一页</a>-->
+<!--          </li>-->
+<!--        {% else %}-->
+<!--          <li class="page-item disabled">-->
+<!--            <span class="page-link">上一页</span>-->
+<!--          </li>-->
+<!--        {% endif %}-->
+
+<!--        {% for page_num in topics.paginator.page_range %}-->
+<!--          {% if topics.number == page_num %}-->
+<!--            <li class="page-item active">-->
+<!--              <span class="page-link">-->
+<!--                {{ page_num }}-->
+<!--                <span class="sr-only">(current)</span>-->
+<!--              </span>-->
+<!--            </li>-->
+<!--          {% else %}-->
+<!--            <li class="page-item">-->
+<!--              <a class="page-link" href="?page={{ page_num }}">{{ page_num }}</a>-->
+<!--            </li>-->
+<!--          {% endif %}-->
+<!--        {% endfor %}-->
+
+<!--        {% if topics.has_next %}-->
+<!--          <li class="page-item">-->
+<!--            <a class="page-link" href="?page={{ topics.next_page_number }}">下一页</a>-->
+<!--          </li>-->
+<!--        {% else %}-->
+<!--          <li class="page-item disabled">-->
+<!--            <span class="page-link">Next</span>-->
+<!--          </li>-->
+<!--        {% endif %}-->
+<!--      </ul>-->
+<!--    </nav>-->
+<!--  {% endif %}-->
+
+{% endblock %}

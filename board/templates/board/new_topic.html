@@ -1,0 +1,39 @@
+{% extends 'board/base.html' %}
+{% load widget_tweaks %}
+
+{% block title %}
+发表新帖
+{% endblock %}
+
+
+{%block breadcrumb %}
+<li class="breadcrumb-item"><a href="{% url 'board:home' %}">学习论坛主页</a></li>
+<li class="breadcrumb-item"><a href="{% url 'board:board_topics' board.pk %}">{{ board.name }}</a></li>
+<li class="breadcrumb-item active">发表新帖</li>
+{% endblock %}
+
+
+{% block content %}
+
+<!--<form method="post">-->
+<!--    {% csrf_token %}-->
+<!--    <div class="form-group">-->
+<!--      <label for="id_subject">主题</label>-->
+<!--      <input type="text" class="form-control" id="id_subject" name="subject">-->
+<!--    </div>-->
+<!--    <div class="form-group">-->
+<!--      <label for="id_message">发帖</label>-->
+<!--      <textarea class="form-control" id="id_message" name="message" rows="5"></textarea>-->
+<!--    </div>-->
+<!--    <button type="submit" class="btn btn-success">发表</button>-->
+<!--  </form>-->
+
+<form method="post" novalidate>
+    {% csrf_token %}
+
+    {% include 'board/includes/form.html' %}
+
+    <button type="submit" class="btn btn-success">发布</button>
+</form>
+
+{% endblock %}

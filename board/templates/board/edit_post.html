@@ -1,0 +1,18 @@
+{% extends 'board/base.html' %}
+{% block title %}编辑回帖{% endblock %}
+
+{% block breadcrumb %}
+  <li class="breadcrumb-item"><a href="{% url 'board:home' %}">板块</a></li>
+  <li class="breadcrumb-item"><a href="{% url 'board:board_topics' post.topic.board.pk %}">{{ post.topic.board.name }}</a></li>
+  <li class="breadcrumb-item"><a href="{% url 'board:topic_posts' post.topic.board.pk post.topic.pk %}">{{ post.topic.subject }}</a></li>
+  <li class="breadcrumb-item active">编辑回帖</li>
+{% endblock %}
+
+{% block content %}
+  <form method="post" class="mb-4" novalidate>
+    {% csrf_token %}
+    {% include 'board/includes/form.html' %}
+    <button type="submit" class="btn btn-success">保存更改</button>
+    <a href="{% url 'board:topic_posts' post.topic.board.pk post.topic.pk %}" class="btn btn-outline-secondary" role="button">取消</a>
+  </form>
+{% endblock %}

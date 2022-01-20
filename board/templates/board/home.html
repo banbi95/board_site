@@ -1,0 +1,46 @@
+{% extends 'board/base.html' %}
+
+{% load humanize %}
+
+{% block breadcrumb %}
+  <li class="breadcrumb-item active">板块</li>
+{% endblock %}
+
+{% block content %}
+  <table class="table">
+    <thead class="thead-inverse">
+      <tr>
+        <th>论坛</th>
+        <th>话题数</th>
+        <th>帖子数</th>
+        <th>最新发帖</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for board in boards %}
+        <tr>
+          <td>
+            <a href="{% url 'board:board_topics' board.pk %}">{{ board.name }}</a>
+            <small class="text-muted d-block">{{ board.description }}</small>
+          </td>
+          <td class="align-middle">{{ board.get_topics_count }}</td>
+          <td class="align-middle">{{ board.get_posts_count }}</td>
+          <td class="align-middle"> {% with topic=board.get_newest_topic %}
+            {% if topic %}
+            <p><a href="{% url 'board:topic_posts' board.pk topic.pk %}"> {{topic.subject}}</a></p>
+
+              <small class="text-muted">
+                  由{{ topic.starter.username }} 发布于 {{ topic.last_updated|naturaltime }}
+              </small>
+            {% else %}
+            <small class="text-muted">
+            <em>该板块还没有帖子</em>
+            </small>
+            {% endif %}
+            {% endwith %}
+          </td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+{% endblock %}
