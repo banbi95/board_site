@@ -2,6 +2,7 @@ import math
 
 from django.db import models
 from django.contrib.auth.models import User
+from django.utils import timezone
 from django.utils.html import  mark_safe
 from django.utils.text import Truncator
 from markdown import markdown
@@ -24,7 +25,7 @@ class Board(models.Model):
         return Post.objects.filter(topic__board=self).order_by('-created_at').first()
 
     def get_newest_topic(self):
-         return  Topic.objects.filter(board=self).order_by('-last_updated').first()
+         return  Topic.objects.filter(board=self).order_by('-created_at').first()
 
     def get_newest_topic_subject(self):
         subject=Topic.objects.filter(board=self).order_by('-last_updated').first().subject
@@ -35,6 +36,7 @@ class Board(models.Model):
 class Topic(models.Model):
     board = models.ForeignKey(Board, related_name='topics',on_delete=models.CASCADE)
     subject = models.CharField(max_length=255)
+    created_at=models.DateTimeField(auto_now_add=True)
     last_updated = models.DateTimeField(auto_now_add=True)
     starter = models.ForeignKey(User, related_name='topics',on_delete=models.CASCADE)
     views = models.PositiveIntegerField(default=0)
@@ -47,6 +49,7 @@ class Topic(models.Model):
 
     def get_replies_count(self):
         return Post.objects.filter(topic=self).count()-1
+
 
     def get_last_updated(self):
         return Post.objects.filter(topic=self).order_by('-created_at').first()
