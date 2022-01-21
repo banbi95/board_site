@@ -53,7 +53,7 @@ class TopicListView(ListView):
     model = Topic
     context_object_name = 'topics'
     template_name = 'board/board_topics.html'
-    paginate_by = 20
+    paginate_by = 15
 
     def get_context_data(self, **kwargs):
         kwargs['board'] = self.board
@@ -79,7 +79,7 @@ def new_topic(request, pk):
             topic = form.save(commit=False)
             topic.board = board
             topic.starter = request.user
-            topic.created_at = datetime.datetime.now()
+            topic.last_updated = topic.created_at = timezone.now()
             topic.save()
             post = Post.objects.create(
                 message=form.cleaned_data.get('message'),
@@ -104,7 +104,7 @@ class PostListView(ListView):
     Model=Post
     context_object_name = 'posts'
     template_name = 'board/topic_posts.html'
-    paginate_by = 2
+    paginate_by = 15
 
     def get_context_data(self, **kwargs):
         session_key = 'viewed_topic_{}'.format(self.topic.pk)  # <-- here
