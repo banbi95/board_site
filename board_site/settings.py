@@ -86,11 +86,26 @@ WSGI_APPLICATION = 'board_site.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.0/ref/settings/#databases
 
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': BASE_DIR / 'db.sqlite3',
+#     }
+# }
+
+
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-    }
+        'ENGINE': 'django.db.backends.mysql',  # 默认           ！键必须都是大写
+        'NAME': config('MYSQL_DATABASE_NAME',default='board'),  # 连接的数据库
+        'HOST': config('MYSQL_HOST',default='127.0.0.1'),  # mysql的ip地址
+        'PORT': config('MYSQL_PORT',default=3306),  # mysql的端口
+        'USER': config('MYSQL_USER',default='root'),  # mysql的用户名
+        'PASSWORD': config('MYSQL_PASSWORD'),
+        'OPTIONS': {
+            'charset': 'utf8mb4'}
+
+        }
 }
 
 
