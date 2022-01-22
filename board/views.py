@@ -1,4 +1,3 @@
-import datetime
 
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
@@ -101,7 +100,7 @@ def new_topic(request, pk):
 
 
 class PostListView(ListView):
-    Model=Post
+    Model = Post
     context_object_name = 'posts'
     template_name = 'board/topic_posts.html'
     paginate_by = 15
@@ -116,12 +115,10 @@ class PostListView(ListView):
         kwargs['topic'] = self.topic
         return super().get_context_data(**kwargs)
 
-
     def get_queryset(self):
         self.topic = get_object_or_404(Topic, board__pk=self.kwargs.get('pk'), pk=self.kwargs.get('topic_pk'))
         queryset = self.topic.posts.order_by('created_at')
         return queryset
-
 
 
 @login_required()
@@ -134,10 +131,10 @@ def reply_topic(request, pk, topic_pk):
             post.topic = topic
             post.created_by = request.user
             post.save()
-            topic.last_updated=timezone.now()
+            topic.last_updated = timezone.now()
             topic.save()
-            topic_url=reverse('board:topic_posts',kwargs={'pk':pk,"topic_pk":topic_pk})
-            topic_post_url="{url}?page={page}#{id}".format(  #todo
+            topic_url = reverse('board:topic_posts', kwargs={'pk': pk, "topic_pk": topic_pk})
+            topic_post_url = "{url}?page={page}#{id}".format(  # todo
                 url=topic_url,
                 id=post.pk,
                 page=topic.get_page_count(),
@@ -176,6 +173,7 @@ def edit_post(request, pk, topic_pk, post_pk):
         form = PostForm(request.POST)
         if form.is_valid():
             post = form.save(commit=False)
+            post.updated_at
             Post.objects.filter(pk=post_pk).update(message=post.message, updated_at=timezone.now(),
                                                    updated_by=request.user)
             return redirect("board:topic_posts", pk=pk, topic_pk=topic_pk)
