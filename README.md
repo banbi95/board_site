@@ -1,6 +1,6 @@
 # 一个简单论坛
 主页
-![论坛主页](C:\Users\Administrator\Desktop\board-home.PNG)
+![论坛主页](presentation/board-home.PNG)
 话题页
 ![话题页](C:\Users\Administrator\Desktop\topics.PNG "话题页")
 留言页
