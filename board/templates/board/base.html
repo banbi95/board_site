@@ -34,7 +34,7 @@
             {{ user.username }}
           </a>
           <div class="dropdown-menu dropdown-menu-right" aria-labelledby="userMenu">
-            <a class="dropdown-item" href="#">我的账户</a>
+            <a class="dropdown-item" href="{% url 'accounts:my_account'  %}">我的账户</a>
             <a class="dropdown-item" href="{% url 'accounts:password_change' %} ">更改密码</a>
             <div class="dropdown-divider"></div>
             <a class="dropdown-item" href="{% url 'accounts:logout' %}">退出登录</a>
