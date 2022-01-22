@@ -18,12 +18,12 @@ import sys
 
 from django.contrib import admin
 from django.urls import path, include
-# from . import  views
+from . import  views
 
 # from board_site.accounts.views  import signup
 
 urlpatterns = [
-    # path('', include('board.urls')),
+    path('', views.redirect_to_home),
     path('board/', include('board.urls')),
     path('admin/', admin.site.urls),
     path('accounts/',include('accounts.urls')),
