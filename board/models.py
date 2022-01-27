@@ -33,7 +33,9 @@ class Board(models.Model):
 
 
 
+
 class Topic(models.Model):
+
     board = models.ForeignKey(Board, related_name='topics',on_delete=models.CASCADE)
     subject = models.CharField(max_length=255)
     created_at=models.DateTimeField(auto_now_add=True)
@@ -48,15 +50,20 @@ class Topic(models.Model):
         return Post.objects.filter(topic=self).order_by('-created_at')[:10]
 
     def get_replies_count(self):
-        return Post.objects.filter(topic=self).count()-1
+        posts_num=Post.objects.filter(topic=self).count()
+        if posts_num>0:
+            return posts_num-1
+        else:
+            return 0
 
 
     def get_last_updated(self):
         return Post.objects.filter(topic=self).order_by('-created_at').first()
 
     def get_page_count(self):
+        from .views import EACH_PAGE_POSTS_NUM
         count = self.posts.count()
-        pages = count / 2
+        pages=count/EACH_PAGE_POSTS_NUM
         return math.ceil(pages)
 
     def has_many_pages(self, count=None):

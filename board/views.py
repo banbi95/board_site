@@ -15,6 +15,9 @@ from .forms import NewTopicForm, PostForm
 from .models import Board, Topic, Post
 from django.views import generic
 
+EACH_PAGE_TOPICS_NUM=15
+EACH_PAGE_POSTS_NUM=15
+
 
 class IndexView(generic.ListView):
     model = Board
@@ -52,7 +55,7 @@ class TopicListView(ListView):
     model = Topic
     context_object_name = 'topics'
     template_name = 'board/board_topics.html'
-    paginate_by = 15
+    paginate_by = EACH_PAGE_TOPICS_NUM
 
     def get_context_data(self, **kwargs):
         kwargs['board'] = self.board
@@ -103,7 +106,7 @@ class PostListView(ListView):
     Model = Post
     context_object_name = 'posts'
     template_name = 'board/topic_posts.html'
-    paginate_by = 15
+    paginate_by = EACH_PAGE_POSTS_NUM
 
     def get_context_data(self, **kwargs):
         session_key = 'viewed_topic_{}'.format(self.topic.pk)  # <-- here
