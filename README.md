@@ -1,4 +1,4 @@
-# 一个简单论坛
+# 一个简单论坛项目
 主页
 ![论坛主页](presentation/board-home.PNG)
 话题页
