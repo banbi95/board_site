@@ -28,8 +28,9 @@ SECRET_KEY=config('SECRET_KEY')    # 将敏感数据放到.env文件中，再用
 
 DEBUG = config('DEBUG', default=False, cast=bool)
 
+STATIC_ROOT='D:/PycharmProjects/board_site/static'
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 # SECURITY WARNING: don't run with debug turned on in production!
 # DEBUG = True
@@ -147,9 +148,9 @@ USE_TZ = True
 
 STATIC_URL = 'static/'
 
-STATICFILES_DIRS = [                    # 添加静态文件的指定目录
-    BASE_DIR/"statics",
-]
+# STATICFILES_DIRS = [                    # 添加静态文件的指定目录
+#     BASE_DIR/"statics",
+# ]
 
 # STATICFILES_DIRS=[
 #     os.path.join(BASE_DIR,'static'),

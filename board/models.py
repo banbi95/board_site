@@ -51,7 +51,7 @@ class Topic(models.Model):
 
     def get_replies_count(self):
         posts_num=Post.objects.filter(topic=self).count()
-        if posts_num>0:
+        if posts_num > 0:
             return posts_num-1
         else:
             return 0

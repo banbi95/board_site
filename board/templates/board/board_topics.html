@@ -42,7 +42,7 @@
             </small>
           </td>
           <td>{{ topic.starter.username }}</td>
-          <td>{{ topic.replies}}</td>
+          <td>{{ topic.get_replies_count}}</td>
           <td>{{ topic.views }}</td>
           <td>{{ topic.last_updated|naturaltime}}</td>
         </tr>
