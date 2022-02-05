@@ -28,7 +28,7 @@ SECRET_KEY=config('SECRET_KEY')    # 将敏感数据放到.env文件中，再用
 
 DEBUG = config('DEBUG', default=False, cast=bool)
 
-STATIC_ROOT='D:/PycharmProjects/board_site/static'
+# STATIC_ROOT='D:/PycharmProjects/board_site/static'
 
 ALLOWED_HOSTS = ['*']
 
@@ -51,6 +51,7 @@ INSTALLED_APPS = [
     'board.apps.BoardConfig',
     'accounts.apps.AccountsConfig',
     'widget_tweaks',
+    'ueditor',
 ]
 
 MIDDLEWARE = [
@@ -134,7 +135,7 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/4.0/topics/i18n/
 
-LANGUAGE_CODE = 'zh-hans'   # 默认 'en-us'
+LANGUAGE_CODE = 'zh-hans'   # 默认为'en-us'
 
 TIME_ZONE = 'Asia/Shanghai'
 
@@ -152,10 +153,10 @@ STATIC_URL = 'static/'
 #     BASE_DIR/"statics",
 # ]
 
-# STATICFILES_DIRS=[
-#     os.path.join(BASE_DIR,'static'),
-#
-# ]
+STATICFILES_DIRS=[
+    os.path.join(BASE_DIR,'statics'),
+
+]
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field

@@ -5,6 +5,17 @@
 发表新帖
 {% endblock %}
 
+ {% block stylesheet %}
+<link rel="stylesheet" type="text/css" href="/ueditor/UE/third-party/SyntaxHighlighter/shCoreDefault.css">
+{% endblock %}
+
+{% block javascript %}
+
+<script type="text/javascript" src="/ueditor/UE/third-party/SyntaxHighlighter/shCore.js"></script>
+    <script type="text/javascript" src="/ueditor/UE/ueditor.config.js"></script>
+    <script type="text/javascript" src="/ueditor/UE/ueditor.all.min.js"></script>
+    <script type="text/javascript" src="/ueditor/UE/lang/zh-cn/zh-cn.js"></script>
+{% endblock %}
 
 {%block breadcrumb %}
 <li class="breadcrumb-item"><a href="{% url 'board:home' %}">学习论坛主页</a></li>
@@ -32,8 +43,19 @@
     {% csrf_token %}
 
     {% include 'board/includes/form.html' %}
+    <script id="container" name="content" type="text/plain">这里写你的初始化内容</script>
+	<!-- 实例化编辑器 -->
+	<script type="text/javascript">
+	    var ue = UE.getEditor('container');
+	</script>
+
 
     <button type="submit" class="btn btn-success">发布</button>
 </form>
 
+<!-- 加载编辑器的容器 -->
+
+
 {% endblock %}
+
+

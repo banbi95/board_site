@@ -18,15 +18,18 @@ import sys
 
 from django.contrib import admin
 from django.urls import path, include
+from django.views.generic import RedirectView
 from . import  views
 
 # from board_site.accounts.views  import signup
 
 urlpatterns = [
-    path('', views.redirect_to_home),
+    # path('', views.redirect_to_home),
+    path('',RedirectView.as_view(url='/board')),
     path('board/', include('board.urls')),
     path('admin/', admin.site.urls),
     path('accounts/',include('accounts.urls')),
-    path('accounts/',include('django.contrib.auth.urls'))
+    path('accounts/',include('django.contrib.auth.urls')),
+    path('ueditor/',include('ueditor.urls'),name='ueditor')
 ]
 
